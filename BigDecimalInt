@@ -1,0 +1,103 @@
+#include<iostream>
+#include <algorithm>
+
+using namespace std;
+
+bool isSmaller(string str1, string str2)
+{
+
+    int n1 = (int)str1.length(), n2 = (int)str2.length() ;
+
+    if (n1 < n2)
+
+        return true ;
+
+    else if (n1 > n2)
+
+        return false ;
+
+    else
+    {
+
+        for (int i = 0; i < n1; ++i)
+        {
+
+            if (str1[i] < str2[i])
+
+                return true ;
+
+            else if (str1[i] > str2[i])
+
+                return false ;
+        }
+
+        return false ;
+
+    }
+}
+
+
+class BigDecimalInt{
+private:
+        string str;
+public:
+        BigDecimalInt(){};
+        BigDecimalInt(string input){
+                str=input;
+            }
+        BigDecimalInt operator - (BigDecimalInt &Right){
+
+
+                string num1,num2,res;
+                int carry=0;
+                num1=str,num2=Right.str;
+                if(isSmaller(num2, num1)){
+
+                    swap(num1,num2);
+                }
+                cout << num1 << "     " << num2 << endl ;
+                int n1=num1.length(),n2=num2.length();
+            reverse(num1.begin(),num1.end());
+            reverse(num2.begin(),num2.end());
+
+            for(int i=0;i<n1;i++){
+                        int num3=((num2[i]-'0')-(num1[i]-'0')-carry);
+                        if(num3<0){
+                                num3=num3+10 ;
+                                carry=1;
+                            }
+                        else{
+                                carry=0;
+                            }
+                        res.push_back(num3+'0') ;
+                    }
+                for(int j=n1;j<n2;j++){
+                        int num3=((num2[j]-'0')-carry);
+                        if(num3<0){
+                                num3=num3+10;
+                                carry=1;
+                            }
+                        else{
+                                carry=0;
+                            }
+                        res.push_back(num3+'0');
+                    }
+                reverse(res.begin(),res.end());
+                BigDecimalInt temp (res);
+                return temp;
+
+            }
+        string get_num(){
+                return str;
+            }
+};
+int main(){
+        string num1,num2;
+        cin>>num1>>num2;
+        BigDecimalInt n1(num1);
+        BigDecimalInt n2(num2);
+        BigDecimalInt n3;
+        n3 = n1-n2;
+        cout<<n3.get_num();
+
+}
